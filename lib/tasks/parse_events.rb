@@ -7,7 +7,7 @@ require 'pry'
 
 class CoBerlin
   def self.scrape
-    page = HTTP.get("https://www.co-berlin.org/en/calender").to_s
+    page = HTTP.get('https://www.co-berlin.org/en/calender').to_s
     noko_page = Nokogiri::HTML(page)
 
     noko_page.css('.seite-c-single').map do |event|
