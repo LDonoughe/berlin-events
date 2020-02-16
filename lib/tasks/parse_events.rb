@@ -11,12 +11,12 @@ class CoBerlin
     noko_page = Nokogiri::HTML(page)
 
     noko_page.css('.seite-c-single').map do |event|
-      {
+      Event.create(
         title: event.css('.article-title').text,
         when: event.css('.article-over-title').text,
         description: event.css('.article-text').text,
         source: 'C/O Berlin'
-      }
+      )
     end
   end
 end
