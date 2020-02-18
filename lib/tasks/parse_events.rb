@@ -3,7 +3,7 @@
 require 'nokogiri'
 require 'http'
 
-# Currently testing for uniqueness with different values for different sites 
+# Currently testing for uniqueness with different values for different sites
 #  but it shouldn't be an issue (and we can change it if it turns out to be)
 
 class CoBerlin
@@ -15,17 +15,17 @@ class CoBerlin
       title = event.css('.article-title').text
       start = event.css('.article-over-title').text.match(%r{[0-9/*]+}).to_s
       start_date = Date.strptime(start, '%d/%m/%y')
-      if Event.where(title: title, start: start_date).count == 0
-        last = event.css('.article-over-title').text.match(%r{[0-9/*]+\sto\s([0-9/*]+)})
-        Event.create(
-          title: title,
-          when: event.css('.article-over-title').text,
-          start: start_date,
-          last: Date.strptime(last && last[1] || start, '%d/%m/%y'),
-          description: event.css('.article-text').text,
-          source: 'C/O Berlin'
-        )
-      end
+      next unless Event.where(title: title, start: start_date).count == 0
+
+      last = event.css('.article-over-title').text.match(%r{[0-9/*]+\sto\s([0-9/*]+)})
+      Event.create(
+        title: title,
+        when: event.css('.article-over-title').text,
+        start: start_date,
+        last: Date.strptime(last && last[1] || start, '%d/%m/%y'),
+        description: event.css('.article-text').text,
+        source: 'C/O Berlin'
+      )
     end
   end
 end
@@ -38,16 +38,16 @@ class Berghain
     noko_page.css('.upcoming-event').each do |event|
       title = event.css('h2').text.strip
       date = event.css('p').first.text
-      if Event.where(title: title, when: date).count == 0
-        Event.create(
-          title: title,
-          when: date,
-          start: DateTime.parse(date),
-          last: DateTime.parse(date),
-          description: event.css('h3').text + '\n' + event.css('h4').text,
-          source: 'Berghain'
-        )
-      end
+      next unless Event.where(title: title, when: date).count == 0
+
+      Event.create(
+        title: title,
+        when: date,
+        start: DateTime.parse(date),
+        last: DateTime.parse(date),
+        description: event.css('h3').text + '\n' + event.css('h4').text,
+        source: 'Berghain'
+      )
     end
   end
 end

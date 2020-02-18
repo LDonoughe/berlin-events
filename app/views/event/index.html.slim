@@ -1,1 +1,4 @@
-= Event.all
+= @events.each do |event|
+  h2= "#{event.title} | #{event.source}"
+  h3= event.when
+  p= event.description

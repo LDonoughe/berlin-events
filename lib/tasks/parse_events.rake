@@ -8,7 +8,7 @@ task scrape: :environment do
   puts 'scraping C/O Berlin Events'
   CoBerlin.scrape
   puts "Current Event Count: #{Event.count}"
-  
+
   puts 'scraping Berghain Events'
   Berghain.scrape
   puts "Current Event Count: #{Event.count}"
