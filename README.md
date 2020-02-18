@@ -22,6 +22,9 @@ createdb dalia-test_test
 to run specs:
 `bundle exec rspec`
 
+scrape sites:
+`rails scrape`
+
 to use server:
 `rails server`
 

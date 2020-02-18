@@ -1,3 +1,15 @@
+h2 filter events
+=form_for :filters do |f|
+  = f.select("source", @sources)
+  div
+  label Check to restrict by date:
+  = f.check_box(:date) 
+  = f.date_select('date')
+  div
+  = f.submit
+
+hr
+
 - @events.each do |event|
   a(href=event.url)
     h2= "#{event.title} | #{event.source}"
