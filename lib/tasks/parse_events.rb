@@ -9,7 +9,6 @@ class CoBerlin
     noko_page = Nokogiri::HTML(page)
 
     noko_page.css('.seite-c-single').each do |event|
-      # binding.pry unless event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
       start = event.css('.article-over-title').text.match(%r{[0-9/*]+}).to_s
       last = event.css('.article-over-title').text.match(%r{[0-9/*]+\sto\s([0-9/*]+)})
       Event.create(
@@ -30,11 +29,7 @@ class Berghain
     noko_page = Nokogiri::HTML(page)
 
     noko_page.css('.upcoming-event').each do |event|
-      # binding.pry unless event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
-      # start = event.css('.article-over-title').text.match(/[0-9\/*]+/).to_s
-      # last = event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
       date = event.css('p').first.text
-      # binding.pry
       Event.create(
         title: event.css('h2').text.strip,
         when: date,
