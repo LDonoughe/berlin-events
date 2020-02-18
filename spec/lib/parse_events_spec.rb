@@ -4,6 +4,7 @@ require 'spec_helper'
 require 'rails_helper'
 require './lib/tasks/parse_events.rb'
 
+# Not following test best practices but this does save a bunch of HTTP requests
 # Fix times later
 describe CoBerlin do
   it 'creates events' do
@@ -11,6 +12,7 @@ describe CoBerlin do
     CoBerlin.scrape
     expect(Event.count).to eq 10
     expect(Event.last.start).to be < Event.last.last
+    expect(Event.last.url).not_to be_empty
 
     # uniqueness
     CoBerlin.scrape
@@ -25,6 +27,7 @@ describe Berghain do
     expect(Event.count).to eq 17
     # fix this later
     expect(Event.last.start).to be <= Event.last.last
+    expect(Event.last.url).not_to be_empty
 
     # uniqueness
     Berghain.scrape

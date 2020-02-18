@@ -24,7 +24,8 @@ class CoBerlin
         start: start_date,
         last: Date.strptime(last && last[1] || start, '%d/%m/%y'),
         description: event.css('.article-text').text,
-        source: 'C/O Berlin'
+        source: 'C/O Berlin',
+        url: "https://www.co-berlin.org#{event.css('a').first[:href]}"
       )
     end
   end
@@ -46,7 +47,8 @@ class Berghain
         start: DateTime.parse(date),
         last: DateTime.parse(date),
         description: event.css('h3').text + '\n' + event.css('h4').text,
-        source: 'Berghain'
+        source: 'Berghain',
+        url: "https://www.berghain.berlin#{event[:href]}"
       )
     end
   end
