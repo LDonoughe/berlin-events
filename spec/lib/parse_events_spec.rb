@@ -11,6 +11,10 @@ describe CoBerlin do
     CoBerlin.scrape
     expect(Event.count).to eq 10
     expect(Event.last.start).to be < Event.last.last
+
+    # uniqueness
+    CoBerlin.scrape
+    expect(Event.count).to eq 10
   end
 end
 
@@ -21,5 +25,9 @@ describe Berghain do
     expect(Event.count).to eq 17
     # fix this later
     expect(Event.last.start).to be <= Event.last.last
+
+    # uniqueness
+    Berghain.scrape
+    expect(Event.count).to eq 17
   end
 end
