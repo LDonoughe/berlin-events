@@ -1,24 +1,22 @@
 # frozen_string_literal: true
 
-require 'extra_print'
 require 'nokogiri'
 require 'http'
-require 'pry'
 
 class CoBerlin
   def self.scrape
     page = HTTP.get('https://www.co-berlin.org/en/calender').to_s
     noko_page = Nokogiri::HTML(page)
 
-    noko_page.css('.seite-c-single').map do |event|
+    noko_page.css('.seite-c-single').each do |event|
       # binding.pry unless event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
-      start = event.css('.article-over-title').text.match(/[0-9\/*]+/).to_s
-      last = event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
+      start = event.css('.article-over-title').text.match(%r{[0-9/*]+}).to_s
+      last = event.css('.article-over-title').text.match(%r{[0-9/*]+\sto\s([0-9/*]+)})
       Event.create(
         title: event.css('.article-title').text,
         when: event.css('.article-over-title').text,
         start: Date.strptime(start, '%d/%m/%y'),
-        end: Date.strptime(last && last[1] || start, '%d/%m/%y'), 
+        last: Date.strptime(last && last[1] || start, '%d/%m/%y'),
         description: event.css('.article-text').text,
         source: 'C/O Berlin'
       )
@@ -28,6 +26,23 @@ end
 
 class Berghain
   def self.scrape
+    page = HTTP.get('https://www.berghain.berlin/en/program/').to_s
+    noko_page = Nokogiri::HTML(page)
 
+    noko_page.css('.upcoming-event').each do |event|
+      # binding.pry unless event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
+      # start = event.css('.article-over-title').text.match(/[0-9\/*]+/).to_s
+      # last = event.css('.article-over-title').text.match(/[0-9\/*]+\sto\s([0-9\/*]+)/)
+      date = event.css('p').first.text
+      # binding.pry
+      Event.create(
+        title: event.css('h2').text.strip,
+        when: date,
+        start: DateTime.parse(date),
+        last: DateTime.parse(date),
+        description: event.css('h3').text + '\n' + event.css('h4').text,
+        source: 'Berghain'
+      )
+    end
   end
 end
