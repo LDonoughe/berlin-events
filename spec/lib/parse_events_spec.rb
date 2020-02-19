@@ -5,7 +5,9 @@ require 'rails_helper'
 require './lib/tasks/parse_events.rb'
 
 # Not following test best practices but this does save a bunch of HTTP requests
-# Fix times later
+# FIXME: use best testing practices
+# FIXME: use webmock or vcr to avoid hanging on request problems
+# FIXME: Fix times later
 describe CoBerlin do
   it 'creates events' do
     expect(Event.count).to eq 0

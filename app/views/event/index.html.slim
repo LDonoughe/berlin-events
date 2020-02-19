@@ -12,6 +12,9 @@ h2 filter events
 
 hr
 
+- if @events.empty?
+  h2 No events match that description
+
 - @events.each do |event|
   a(href=event.url)
     h2= "#{event.title} | #{event.source}"
