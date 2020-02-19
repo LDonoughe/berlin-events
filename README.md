@@ -22,6 +22,9 @@ createdb dalia-test_test
 to run specs:
 `bundle exec rspec`
 
+if you don't want to hit an external resources:
+`bundle exec rspec spec/controllers`
+
 scrape sites:
 `rails scrape`
 
