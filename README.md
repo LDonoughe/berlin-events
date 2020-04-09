@@ -1,7 +1,7 @@
-# Dalia Take-Home Project
+# Berlin Events Calendar
 
 ## Overview
-Scrape, parse, save, filter, and display calendar events
+Scrape, parse, save, filter, and display events in Berlin
 
 ## Setup
 install asdf plugins for postgres, nodejs, ruby
