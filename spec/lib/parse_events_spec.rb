@@ -10,17 +10,17 @@ require './lib/tasks/parse_events.rb'
 # FIXME: Fix times later
 describe CoBerlin do
   before do
-    stub_request(:get, "https://www.co-berlin.org/en/calender").
-         to_return(status: 200, body: file_fixture('coberlin.html').read, headers: {})
+    stub_request(:get, 'https://www.co-berlin.org/en/calender')
+      .to_return(status: 200, body: file_fixture('coberlin.html').read, headers: {})
   end
-  
+
   it 'creates events' do
     expect(Event.count).to eq 0
     CoBerlin.scrape
     expect(Event.count).to eq 8
     expect(Event.last.start).to be < Event.last.last
     expect(Event.last.url).not_to be_empty
-    
+
     # uniqueness
     CoBerlin.scrape
     expect(Event.count).to eq 8
@@ -28,9 +28,8 @@ describe CoBerlin do
 
   context 'when site is down' do
     before do
-      stub_request(:get, "https://www.co-berlin.org/en/calender").
-           to_return(status: 500, body: '', headers: {})
-
+      stub_request(:get, 'https://www.co-berlin.org/en/calender')
+        .to_return(status: 500, body: '', headers: {})
     end
 
     let!(:event) { create(:event) }
@@ -47,8 +46,8 @@ end
 
 describe Berghain do
   before do
-    stub_request(:get, "https://www.berghain.berlin/en/program/").
-         to_return(status: 200, body: file_fixture('berghain.html').read, headers: {})
+    stub_request(:get, 'https://www.berghain.berlin/en/program/')
+      .to_return(status: 200, body: file_fixture('berghain.html').read, headers: {})
   end
 
   it 'creates events' do
@@ -66,9 +65,8 @@ describe Berghain do
 
   context 'when site is down' do
     before do
-      stub_request(:get, "https://www.berghain.berlin/en/program/").
-           to_return(status: 500, body: '', headers: {})
-
+      stub_request(:get, 'https://www.berghain.berlin/en/program/')
+        .to_return(status: 500, body: '', headers: {})
     end
 
     let!(:event) { create(:event) }

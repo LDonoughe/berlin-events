@@ -42,9 +42,9 @@ gem 'slim-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'extra_print'
+  gem 'factory_bot', '~> 5.1'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
-  gem "factory_bot", "~> 5.1"
 end
 
 group :test do

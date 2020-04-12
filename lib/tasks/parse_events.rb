@@ -20,7 +20,7 @@ class CoBerlin
       last = event.css('.article-over-title').text.match(%r{[0-9/*]+\sto\s([0-9/*]+)})
       Event.create(
         title: title,
-        when: event.css('.article-over-title').text,
+        timing: event.css('.article-over-title').text,
         start: start_date,
         last: Date.strptime(last && last[1] || start, '%d/%m/%y'),
         description: event.css('.article-text').text,
@@ -39,11 +39,11 @@ class Berghain
     noko_page.css('.upcoming-event').each do |event|
       title = event.css('h2').text.strip
       date = event.css('p').first.text
-      next unless Event.where(title: title, when: date).count == 0
+      next unless Event.where(title: title, timing: date).count == 0
 
       Event.create(
         title: title,
-        when: date,
+        timing: date,
         start: DateTime.parse(date),
         last: DateTime.parse(date),
         description: event.css('h3').text + '\n' + event.css('h4').text,
