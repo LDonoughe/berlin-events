@@ -44,6 +44,7 @@ group :development, :test do
   gem 'extra_print'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
+  gem "factory_bot", "~> 5.1"
 end
 
 group :test do

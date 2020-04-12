@@ -20,10 +20,28 @@ describe CoBerlin do
     expect(Event.count).to eq 8
     expect(Event.last.start).to be < Event.last.last
     expect(Event.last.url).not_to be_empty
-
+    
     # uniqueness
     CoBerlin.scrape
     expect(Event.count).to eq 8
+  end
+
+  context 'when site is down' do
+    before do
+      stub_request(:get, "https://www.co-berlin.org/en/calender").
+           to_return(status: 500, body: '', headers: {})
+
+    end
+
+    let!(:event) { create(:event) }
+
+    it 'responds in a reasonable fashion' do
+      expect(Event.count).to eq 1
+      expect(Event.first.title).to eq event.title
+      CoBerlin.scrape
+      expect(Event.count).to eq 1
+      expect(Event.first.title).to eq event.title
+    end
   end
 end
 
@@ -44,5 +62,23 @@ describe Berghain do
     # uniqueness
     Berghain.scrape
     expect(Event.count).to eq 15
+  end
+
+  context 'when site is down' do
+    before do
+      stub_request(:get, "https://www.berghain.berlin/en/program/").
+           to_return(status: 500, body: '', headers: {})
+
+    end
+
+    let!(:event) { create(:event) }
+
+    it 'responds in a reasonable fashion' do
+      expect(Event.count).to eq 1
+      expect(Event.first.title).to eq event.title
+      Berghain.scrape
+      expect(Event.count).to eq 1
+      expect(Event.first.title).to eq event.title
+    end
   end
 end
