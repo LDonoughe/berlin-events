@@ -6,7 +6,6 @@ require './lib/tasks/parse_events.rb'
 
 # Not following test best practices but this does save a bunch of HTTP requests
 # FIXME: use best testing practices
-# FIXME: use webmock or vcr to avoid hanging on request problems
 # FIXME: Fix times later
 describe CoBerlin do
   before do

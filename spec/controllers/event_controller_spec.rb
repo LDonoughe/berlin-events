@@ -7,7 +7,7 @@ RSpec.describe EventController do
   # FIXME: These are pretty much all happy path tests
   describe 'GET index' do
     # usually we would use a factory instead
-    let!(:event) { Event.create(title: 'test') }
+    let!(:event) { create(:event, title: 'test') }
     it 'assigns @events' do
       get :index
       expect(assigns(:events).first).to eq Event.first
@@ -19,8 +19,8 @@ RSpec.describe EventController do
     end
 
     context 'with filters' do
-      let!(:event) { Event.create(title: '1 test 1', source: 'test') }
-      let!(:event2) { Event.create(title: 'Klubnacht', source: 'Berghain') }
+      let!(:event) { create(:event, title: '1 test 1', source: 'test') }
+      let!(:event2) { create(:event, title: 'Klubnacht', source: 'Berghain') }
 
       it 'finds an exact name match' do
         get :index, params: { filters: { 'search': '1 test 1' } }

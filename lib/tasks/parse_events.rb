@@ -6,6 +6,7 @@ require 'http'
 # Currently testing for uniqueness with different values for different sites
 #  but it shouldn't be an issue (and we can change it if it turns out to be)
 
+# Arguably these could be DRYed out with an EventSource class
 class CoBerlin
   def self.scrape
     page = HTTP.get('https://www.co-berlin.org/en/calender').to_s
